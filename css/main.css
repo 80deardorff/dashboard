@@ -1,0 +1,51 @@
+
+/* NAVBAR */
+a.navbar-brand {
+    font-size: 1.75rem;
+}
+a.navbar-brand img {
+    width: 50px;
+    margin-right: 10px;
+}
+div.collapse.navbar-collapse {
+    justify-content: flex-end;
+}
+div.navbar-nav a i {
+    padding-right: 10px;
+}
+.dropdown-menu {
+    top: 100%;
+    left: initial;
+    right:0;
+    margin: .1rem 2rem 0 0;
+}
+div.dropdown-menu.bg-dark.show {
+    border: none;
+    padding: 0 3rem;
+}
+.dropdown-item {
+    color: rgba(255,255,255,.5);
+}
+.dropdown-item:hover,
+.dropdown-item:active {
+    color: rgba(255,255,255,.75);
+    background-color: transparent;
+}
+@media (min-width: 992px) {
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    }
+}
+
+/* MAIN SECTION */
+body {
+    background-color: black;
+}
+div.container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+div.row div {
+    height: 100vh;
+}
