@@ -1,5 +1,13 @@
+/*
+--TABLE OF CONTENTS--
 
-/* NAVBAR */
+#1 - NAVBAR
+#2 - MAIN SECTION
+#3 - SIDE NAV
+*/
+
+
+/* #1 - NAVBAR */
 a.navbar-brand {
     font-size: 1.75rem;
 }
@@ -38,14 +46,39 @@ div.dropdown-menu.bg-dark.show {
     }
 }
 
-/* MAIN SECTION */
+/* #2 - MAIN SECTION */
 body {
     background-color: black;
+    position: relative;
+    min-height: 90vh;
 }
-div.container {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+.main {
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: width 0.5s;
 }
-div.row div {
-    height: 100vh;
+
+/* #3 - SIDE NAV */
+.side-nav {
+    position: absolute;
+    height: 100%;
+    width: 0;
+    transition: width 0.5s;
+}
+.side-nav-expanded {
+    width: 15%;
+}
+.main-side-nav-expanded{
+    width: 85%;
+}
+#side-nav-btn {
+    border-radius: initial;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+#side-nav-btn:focus {
+    box-shadow: none;
 }
