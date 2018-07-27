@@ -3,7 +3,9 @@
 
 #1 - NAVBAR
 #2 - MAIN SECTION
-#3 - SIDE NAV
+#3 - USER
+#4 - SALES
+#5 - SIDE NAV
 */
 
 
@@ -55,9 +57,9 @@ body {
 }
 .element {
     width: 100%;
-    background-color: #495057;
+    background-color: #343a40;
     border-radius: 15px;
-    padding: 50px 20px;
+    padding: 65px 20px;
     margin: 20px 0;
 }
 .main {
@@ -65,6 +67,8 @@ body {
     margin-right: 0;
     transition: all 0.5s ease-in-out;
 }
+
+/* #3 - USER */
 .user{
     text-align: center;
     display: inline-block;
@@ -82,11 +86,50 @@ body {
 .user h6 {
     margin: 20px 0 0 0;
 }
+
+/* #4 - SALES */
 .sales {
     display: inline-block;
+    position: relative;
+}
+#time {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    font-size: 0.8rem;
+}
+#span1 {
+    font-size: 0.8rem;
+    margin-left: 20px;
+    color: #ff6161;
+}
+.targetBar {
+    margin-top: 25px;
+    width: 100%;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 25px;
+    background-color: royalblue;
+    position: relative;
+    box-sizing: content-box;
+}
+#salesBar {
+    width: 0;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 25px;
+    background-color: mediumspringgreen;
+    position: absolute;
+}
+#indicator {
+    text-align: center;
+    position: absolute;
+    top: 25px;
+    left: 0px;
 }
 
-/* #3 - SIDE NAV */
+/* #5 - SIDE NAV */
 .side-nav {
     position: absolute;
     height: 100%;
