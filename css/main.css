@@ -92,17 +92,21 @@ body {
     display: inline-block;
     position: relative;
 }
-#time {
+#time,
+#workingDays {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 170px;
+    width: 200px;
     font-size: 0.8rem;
+}
+#workingDays {
+    top: 30px;
 }
 #span1 {
     font-size: 0.8rem;
     margin-left: 20px;
-    color: #ff6161;
+    color: green;
 }
 .targetBar {
     margin-top: 25px;
@@ -116,11 +120,14 @@ body {
 }
 #salesBar {
     width: 0;
-    height: 25px;
+    height: 100%;
     border: 2px solid black;
     border-radius: 25px;
     background-color: mediumspringgreen;
     position: absolute;
+    top: -2px;
+    left: -2px;
+    box-sizing: content-box;
 }
 #indicator {
     text-align: center;

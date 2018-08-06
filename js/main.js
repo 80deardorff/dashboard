@@ -5,7 +5,7 @@ var user = [{
     idNum: '',
     img: 'img/adrianDeardorff.png',
     target: 1208065,
-    sales: 865475
+    sales: 280623
 }]
 
 // GENERATING A 4 DIGIT RANDOM ID NUMBER
@@ -28,9 +28,9 @@ $('#userName').text(user[0].firstName + ' ' + user[0].lastName);
 $('#userId').text('Employee ID: ' + user[0].idNum);
 
 // TIME VARIABLES
-var now, year, month, day, hour, minute, second, meridiem;
-var monthNames = ["January", "February", "March", "April", "May", "June",
-"July", "August", "September", "October", "November", "December"];
+var now, year, month, day, hour, minute, second, meridiem, workingDays;
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 // FUNCTION FOR DISPLAYING TIME
 function currentTime() {
@@ -38,7 +38,7 @@ function currentTime() {
     year = now.getFullYear();
     month = monthNames[now.getMonth()];
     day = now.getDate();
-    hour = formatAddZero(formatToStandardTime(now.getHours()));
+    hour = toStandardTime(now.getHours());
     minute = formatAddZero(now.getMinutes());
     second = formatAddZero(now.getSeconds());
     meridiem = (function() {
@@ -48,8 +48,10 @@ function currentTime() {
                             return 'AM';
                         }
                     })();
+    workingDays = getWeekdaysInMonth(now.getMonth(), year);
     // CURRENT TIME
     $('#time').text(month + ' ' + day + ', ' + year + ' ' + hour + ':' + minute + ':' + second + ' ' + meridiem);
+    $('#workingDays').text('Working days in ' + month + ': ' + getWeekdaysInMonth(now.getMonth(), year));
     setTimeout(function() {
         currentTime();
     }, 1000)
@@ -59,19 +61,32 @@ currentTime();
 // SALES VARIABLES
 var target = user[0].target;
 var sales = user[0].sales;
-var diff = target - sales;
+var currentTarget = target / workingDays * day;
+var percentPlusMinus = (currentTarget - sales) / currentTarget * 100;
 
 // MONTHLY TARGET
 $('#monthTarget').text(month + ' Target: $' + target.toLocaleString(undefined, {maximumFractionDigits:0}));
+
+// MONTH TO DATE TARGET
+$('#mtdTarget').text('Current Day Target: $' + currentTarget.toLocaleString(undefined, {maximumFractionDigits:0}));
 
 // CURRENT SALES
 $('#currentSales').text(month + ' Sales: $' + sales.toLocaleString(undefined, {maximumFractionDigits:0}));
 
 // STATUS FOR TIME OF MONTH
 var span1 = document.createElement('span');
-span1.innerText = (diff / target * 100).toLocaleString(undefined, {maximumFractionDigits:2}) + '%';
+span1.innerText = percentPlusMinus.toLocaleString(undefined, {maximumFractionDigits:2}) + '%';
 span1.setAttribute('id', 'span1');
-$('#currentSales').append(span1);
+$('#mtdTarget').append(span1);
+
+// SETS STYLE TO GREEN AND ADDS A PLUS SIGN IF ABOVE TARGET
+if (percentPlusMinus > 0) {
+    span1.innerText = '-' + percentPlusMinus.toLocaleString(undefined, {maximumFractionDigits:2}) + '%';
+    span1.setAttribute('style', 'color: #ff6161');
+}
+else {
+    span1.innerText = '+' + (percentPlusMinus * -1).toLocaleString(undefined, {maximumFractionDigits:2}) + '%';
+}
 
 // SALES BAR BASED ON PERCENT OF TARGET FOR MONTH
 var monthPercent = Math.floor((sales / target * 100)).toLocaleString(undefined, {maximumFractionDigits:0});
@@ -86,8 +101,10 @@ if (monthPercent < 3) {
 $('#indicator').css({'left': monthPercent - 3 + '%', 'transition': 'left 3.0s ease-in-out'})
 
 // FUNCTION FOR CHANGING FROM MILITARY TIME TO STANDARD TIME
-function formatToStandardTime(hour) {
-    if (hour > 12) {
+function toStandardTime(hour) {
+    if (hour == 0) {
+        return 12;
+    } else if (hour > 12) {
         return hour - 12;
     } else {
         return hour;
@@ -104,15 +121,22 @@ function formatAddZero(num) {
 };
 
 // FUNCTION FOR COUNTING NUMBER OF WORKING DAYS IN MONTH
-// function isWeekday(year, month, day) {
-// var day = new Date(year, month, day).getDay();
-// return day !=0 && day !=6;
-// }
-// function getWeekdaysInMonth(month, year) {
-// var days = daysInMonth(month, year);
-// var weekdays = 0;
-// for(var i=0; i< days; i++) {
-//     if (isWeekday(year, month, i+1)) weekdays++;
-// }
-// return weekdays;
-// }
+function isWeekday(year, month, day) {
+    var day = new Date(year, month, day).getDay();
+    return day !=0 && day !=6;
+}
+function getWeekdaysInMonth(month, year) {
+    var days = daysInMonth(month, year);
+    var weekdays = 0;
+    for(var i=0; i< days; i++) {
+        if (isWeekday(year, month, i+1)) {
+            weekdays++;
+        }
+    }
+    return weekdays;
+}
+function daysInMonth(month, year) {
+  //Day 0 is the last day in the previous month
+ return new Date(year, month + 1, 0).getDate();
+// Here January is 0 based
+};
